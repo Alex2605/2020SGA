@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -Dspring.profliles.active=prod -jar target/SGA-0.0.1-SNAPSHOT.jar

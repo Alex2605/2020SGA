@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<section class="layout-content" layout:fragment="corpo">
+		<main role="main">
+
+		<section class="jumbotron text-center">
+			<img class="d-block mx-auto mb-4" th:src="@{/image/spring-security.png}"
+				width="72" height="72">
+			<div class="container">
+				<h1 class="jumbotron-heading">Sistema de Gerenciamento Administrativo</h1>
+				<p class="lead text-muted">Bem vindo ao sistema do clube XPTO, elaborado como trabalho de conclusão 
+				                           do curso Tecnologia em Sistemas de Computação do CEDERJ.</p>
+			</div>
+		</section>
+
+		<div class="album py-5 bg-light">
+
+			<div class="container">
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" th:src="@{/image/CEDERJ.jpg}">
+							<div class="card-body">
+								<h5 class="card-title"><a class="navbar-brand" href="https://www.cecierj.edu.br/">CEDERJ</a></h5>
+								<p class="card-text">Consórcio das universidades públicas
+								    do estado do Rio de Janeio, que provém cursos de graduação 
+								    e de extensão na modalidade semi presencial</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" th:src="@{/image/java.jpg}">
+							<div class="card-body">
+								<h5 class="card-title"><a href="https://www.java.com/pt_BR/about/whatis_java.jsp">Java</a></h5>
+								<p class="card-text">Linguagem de programação orientada a objetos 
+								    desenvolvida na década de 90,pela Sun Microsystems. 
+								    Em 2008 adquirido pela empresa Oracle Corporation.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" th:src="@{/image/Spring.jpg}">
+							<div class="card-body">
+								<h5 class="card-title"><a class="navbar-brand" href="https://spring.io/">Spring Framework</a></h5>
+								<p class="card-text">É um framework open source para a plataforma Java, 
+								    baseado nos padrões de projeto inversão de controle (IoC) e injeção de dependência. </p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" th:src="@{/image/Jquery.jpg}">
+							<div class="card-body">
+								<h5 class="card-title"><a href="https://jquery.com/">JQuery</a></h5>
+								<p class="card-text">É uma biblioteca de funções JavaScript 
+								    que interage com o HTML, desenvolvida para simplificar os scripts 
+								    interpretados no navegador do cliente.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" th:src="@{/image/AJAX.jpg}">
+							<div class="card-body">
+								<h5 class="card-title"><a class="navbar-brand" href="https://pt.wikipedia.org/wiki/Ajax_(programa%C3%A7%C3%A3o)">AJAX</a></h5>
+								<p class="card-text">Acrônimo (ingles) de Asynchronous Javascript and XML, 
+								    faz uso metodológico de Javascript e XML, para tornar páginas Web mais interativas</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="card mb-4 box-shadow">
+							<img class="card-img-top" th:src="@{/image/Bootstrap.jpg}">
+							<div class="card-body">
+								<h5 class="card-title"><a href="https://getbootstrap.com/">Bootstrap</a></h5>
+								<p class="card-text">É um framework para desenvolvimento de componentes de interface 
+								    e front-end para sites, baseado principalmente em CSS, 
+								    objetivando um site amigável e responsivo.</p>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</main>
+	</section>
+	<script th:src="~{}" th:fragment="js"></script>
+	<script th:inline="javascript" th:fragment="inlinescript"></script>
+</body>
+</html>
