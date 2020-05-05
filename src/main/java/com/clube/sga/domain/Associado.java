@@ -37,11 +37,11 @@ public class Associado extends Pessoa {
 	@NotNull
 	@PastOrPresent(message = "{PastOrPresent.funcionario.dataEntrada}")
 	@DateTimeFormat(iso = ISO.DATE, pattern = "")
-	@Column(name= "data_inscricao", nullable = false, columnDefinition = "DATE")
+	@Column(name= "dtinscricao", nullable = false, columnDefinition = "DATE")
 	private LocalDate dataInscricao;
 
 	@DateTimeFormat(iso = ISO.DATE)
-	@Column(name = "data_saida", columnDefinition = "DATE")
+	@Column(name = "dtsaida", columnDefinition = "DATE")
 	private LocalDate dataSaida;
 	
 	@Valid

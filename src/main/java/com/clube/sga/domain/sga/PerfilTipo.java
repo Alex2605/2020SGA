@@ -1,7 +1,7 @@
 package com.clube.sga.domain.sga;
 
 public enum PerfilTipo {
-	ADMIN(1, "ADMIN"), MEDICO(2, "MEDICO"), PACIENTE(3, "PACIENTE");
+	ADMIN(1, "ADMIN"), USUARIO(2, "USUARIO"), ASSOCIADO(3, "ASSOCIADO");
 	
 	private long cod;
 	private String desc;

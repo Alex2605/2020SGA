@@ -3,9 +3,7 @@ package com.clube.sga.domain;
 public enum PerfilTipo {
 	ADMIN(1, "ADMIN"), 
 	USUARIO(2,"USUARIO"),
-	ASSOCIADO(3, "ASSOCIADO"),	
-	MEDICO(4, "MEDICO"), 
-	PACIENTE(5, "PACIENTE"); 
+	ASSOCIADO(3, "ASSOCIADO");
 
 	private long cod;
 	private String desc;

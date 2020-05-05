@@ -22,11 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.clube.sga.domain.Medico;
 import com.clube.sga.domain.Perfil;
 import com.clube.sga.domain.PerfilTipo;
 import com.clube.sga.domain.Usuario;
-import com.clube.sga.service.MedicoService;
+import com.clube.sga.service.AssociadoService;
 import com.clube.sga.service.UsuarioService;
 
 @Controller
@@ -35,15 +34,29 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService service;
-	@Autowired
-	private MedicoService medicoService;
 	
-    // abrir cadastro de usuarios (medico/admin/paciente)
+//	@Autowired
+//	private MedicoService medicoService;
+	
+	@Autowired
+	private AssociadoService associadoService;
+	
+
+
+	
+	// abrir cadastro de usuarios (medico/admin/paciente)
     @GetMapping("/novo/cadastro/usuario")
     public String cadastroPorAdminParaAdminMedicoPaciente(Usuario usuario) {
 
         return "usuario/cadastro";
     }
+
+    // abrir lista de associados - acho que deve ficar no controler do usuário
+    @GetMapping("/listar/associados")
+    public String listarAssociados() {
+        return "associado/lista";
+    }  
+    
     
     // abrir lista de usuarios
     @GetMapping("/lista")
@@ -55,9 +68,18 @@ public class UsuarioController {
     // listar usuarios na datatables
     @GetMapping("/datatables/server/usuarios")
     public ResponseEntity<?> listarUsuariosDatatables(HttpServletRequest request) {
-
         return ResponseEntity.ok(service.buscarTodos(request));
     } 
+
+
+	// Manutenção Alex novas funcionalidades
+    // listar associados na datatables
+    @GetMapping("/datatables/server/associados")
+    public ResponseEntity<?> listarAssociadosDatatables(HttpServletRequest request) {
+    	System.out.println("Entro aqui");
+        return ResponseEntity.ok(associadoService.buscarTodos(request));
+    }	
+    
     
     // salvar cadastro de usuarios por administrador
     @PostMapping("/cadastro/salvar")
@@ -93,16 +115,18 @@ public class UsuarioController {
     	Usuario us = service.buscarPorIdEPerfis(usuarioId, perfisId);
     	
     	if (us.getPerfis().contains(new Perfil(PerfilTipo.ADMIN.getCod())) &&
-    		!us.getPerfis().contains(new Perfil(PerfilTipo.MEDICO.getCod())) ) {
+    		!us.getPerfis().contains(new Perfil(PerfilTipo.USUARIO.getCod())) ) {
     		
     		return new ModelAndView("usuario/cadastro", "usuario", us);
+/*    		
     	} else if (us.getPerfis().contains(new Perfil(PerfilTipo.MEDICO.getCod()))) {
     		
     		Medico medico = medicoService.buscarPorUsuarioId(usuarioId);
     		return medico.hasNotId()
     				? new ModelAndView("medico/cadastro", "medico", new Medico(new Usuario(usuarioId)))
     				: new ModelAndView("medico/cadastro", "medico", medico);
-    	} else if (us.getPerfis().contains(new Perfil(PerfilTipo.PACIENTE.getCod()))) {
+*/
+    	} else if (us.getPerfis().contains(new Perfil(PerfilTipo.ASSOCIADO.getCod()))) {
     		ModelAndView model = new ModelAndView("error");
     		model.addObject("status", 403);
     		model.addObject("error", "Área Restrita");

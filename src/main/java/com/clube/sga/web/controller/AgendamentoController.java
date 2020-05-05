@@ -2,14 +2,11 @@ package com.clube.sga.web.controller;
 
 import java.time.LocalDate;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.clube.sga.domain.Agendamento;
 import com.clube.sga.domain.Especialidade;
 import com.clube.sga.domain.Paciente;
-import com.clube.sga.domain.PerfilTipo;
 import com.clube.sga.service.AgendamentoService;
 import com.clube.sga.service.EspecialidadeService;
 import com.clube.sga.service.PacienteService;
@@ -74,7 +70,7 @@ public class AgendamentoController {
 
 		return "agendamento/historico-paciente";
 	}
-	
+/*	
 	// localizar o historico de agendamentos por usuario logado
 	@GetMapping("/datatables/server/historico")
 	public ResponseEntity<?> historicoAgendamentosPorPaciente(HttpServletRequest request, @AuthenticationPrincipal User user) {
@@ -90,7 +86,7 @@ public class AgendamentoController {
 		
 		return ResponseEntity.notFound().build();
 	}
-	
+*/	
 	// localizar agendamento pelo id e envia-lo para a pagina de cadastro
 	@GetMapping("/editar/consulta/{id}") 
 	public String preEditarConsultaPaciente(@PathVariable("id") Long id, 

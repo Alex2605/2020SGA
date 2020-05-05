@@ -9,8 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.clube.sga.domain.Associado;
 import com.clube.sga.domain.EstadoCivil;
@@ -55,6 +58,22 @@ public class AssociadoController {
 		}
 		return "associado/cadastro";
 	}	
+
+    // pre edicao de credenciais de Associados
+    @GetMapping("/editar/credenciais/associado/{id}")
+    public ModelAndView preEditarCredenciais(@PathVariable("id") Long id) {
+
+        return new ModelAndView("associado/cadastroporusuario", "associado", service.buscarPorId(id));
+    }    
+
+	//Excluir associados
+    @GetMapping("/excluir/{id}")
+	public String abrir(@PathVariable("id") Long id, RedirectAttributes attr) {
+		service.remover(id);
+		attr.addFlashAttribute("sucesso", "Operação realizada com sucesso.");
+		return "redirect:/u/listar/associados";
+	}    
+	
 	
 	// editar o form de dados pessoais do Associado com verificacao de senha
 	@PostMapping("/editar")
@@ -70,6 +89,17 @@ public class AssociadoController {
 	}	
 
 
+	// editar o form de dados pessoais do Associado com verificacao de senha
+	@PostMapping("/usuario/editar")
+	public String usuarioEditar(Associado associado, ModelMap model) {
+		service.editar(associado);
+		model.addAttribute("sucesso", "Seus dados foram editados com sucesso.");
+		return "associado/cadastroporusuario";
+		//return "redirect:/u/listar/associados";
+	}	
+	
+	
+	
 	@ModelAttribute("ufs")
 	public UF[] getUFs() {
 		return UF.values();

@@ -3,7 +3,7 @@ Implementation-Title: SGA
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: alexa
 Implementation-Vendor-Id: com.clube.sga
-Build-Jdk: 1.8.0_231
+Build-Jdk: 1.8.0_251
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/SGA
 Created-By: Maven Integration for Eclipse

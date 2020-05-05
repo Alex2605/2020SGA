@@ -32,7 +32,7 @@ public abstract class Pessoa extends AbstractEntity {
 	@NotNull
  	@PastOrPresent(message = "{PastOrPresent.pessoa.dataNascimento}")
 	@DateTimeFormat(iso = ISO.DATE, pattern = "")
-	@Column(name= "data_nascimento", nullable = false, columnDefinition = "DATE")
+	@Column(name= "dtnascimento", nullable = false, columnDefinition = "DATE")
 	private LocalDate dataNascimento;
 	
 

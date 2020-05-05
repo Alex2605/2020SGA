@@ -13,17 +13,16 @@ import com.clube.sga.service.UsuarioService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	private static final String ADMIN = PerfilTipo.ADMIN.getDesc();
-    private static final String MEDICO = PerfilTipo.MEDICO.getDesc();
-    private static final String PACIENTE = PerfilTipo.PACIENTE.getDesc();
-    private static final String ASSOCIADO = PerfilTipo.ASSOCIADO.getDesc();
+	private static final String ADMIN 		= PerfilTipo.ADMIN.getDesc();
+    private static final String ASSOCIADO 	= PerfilTipo.ASSOCIADO.getDesc();
+    private static final String USUARIO 	= PerfilTipo.USUARIO.getDesc();
 	
 	@Autowired
 	private UsuarioService service;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
+//		http.csrf().disable();
 		http.authorizeRequests()
 			// acessos públicos liberados
 			.antMatchers("/webjars/**", "/css/**", "/image/**", "/js/**").permitAll()
@@ -31,25 +30,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/u/novo/cadastro","/u/cadastro/realizado","/u/cadastro/paciente/salvar").permitAll()
 			.antMatchers("/u/confirmacao/cadastro").permitAll()
 			.antMatchers("/u/p/**").permitAll()
+
+			// acessos privados do usuario
+			.antMatchers("/u/listar/associados").hasAuthority(USUARIO)
+			.antMatchers("/associados/editar/credenciais/associado/**").hasAuthority(USUARIO)
+			.antMatchers("/associados/excluir/**").hasAuthority(USUARIO)
+			.antMatchers("/associados/usuario/editar").hasAuthority(USUARIO)
 			
 			// acessos privados admin
-			.antMatchers("/u/editar/senha", "/u/confirmar/senha").hasAnyAuthority(PACIENTE, MEDICO, ASSOCIADO, ADMIN)
-			.antMatchers("/u/**").hasAuthority(ADMIN)
-			
-			// acessos privados medicos
-			.antMatchers("/medicos/especialidade/titulo/*").hasAnyAuthority(PACIENTE, MEDICO)
-			.antMatchers("/medicos/dados", "/medicos/salvar", "/medicos/editar").hasAnyAuthority(MEDICO, ADMIN)
-			.antMatchers("/medicos/**").hasAuthority(MEDICO)
-			
-			// acessos privados pacientes
-			.antMatchers("/pacientes/**").hasAuthority(PACIENTE)
+			.antMatchers("/u/editar/senha", "/u/confirmar/senha").hasAnyAuthority(ADMIN, USUARIO, ASSOCIADO)
 
-			// acessos privados associados incluído Alex
-			.antMatchers("/associados/**").hasAuthority(ASSOCIADO)	
+			.antMatchers("/u/**").hasAnyAuthority(ADMIN, USUARIO)
 			
+			// acessos privados associados incluído Alex
+			.antMatchers("/associados/salvar").hasAuthority(ASSOCIADO)
+			.antMatchers("/associados/**").hasAuthority(ASSOCIADO) 
+				
 			// acessos privados especialidades
-			.antMatchers("/especialidades/datatables/server/medico/*").hasAnyAuthority(MEDICO, ADMIN)
-			.antMatchers("/especialidades/titulo").hasAnyAuthority(MEDICO, ADMIN, PACIENTE)
 			.antMatchers("/especialidades/**").hasAuthority(ADMIN)
 			
 			.anyRequest().authenticated()
