@@ -39,12 +39,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			
 			// acessos privados admin
 			.antMatchers("/u/editar/senha", "/u/confirmar/senha").hasAnyAuthority(ADMIN, USUARIO, ASSOCIADO)
-
 			.antMatchers("/u/**").hasAnyAuthority(ADMIN, USUARIO)
+			.antMatchers("/servicos/**").hasAuthority(ADMIN)
 			
 			// acessos privados associados incluído Alex
 			.antMatchers("/associados/salvar").hasAuthority(ASSOCIADO)
-			.antMatchers("/associados/**").hasAuthority(ASSOCIADO) 
+			.antMatchers("/associados/**").hasAuthority(ASSOCIADO)
+			.antMatchers("/dependentes/**").hasAuthority(ASSOCIADO) 
+			.antMatchers("/agendamentos/agendar").hasAuthority(ASSOCIADO)
+			.antMatchers("/servicos/servico/titulo").hasAuthority(ASSOCIADO)
 				
 			// acessos privados especialidades
 			.antMatchers("/especialidades/**").hasAuthority(ADMIN)

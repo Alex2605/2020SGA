@@ -23,18 +23,18 @@ public class Dependente extends Pessoa {
 
 //	@NotNull(message = "{NotNull.endereco.uf}")
 //	@Column(nullable = false)
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoDependente tipoDependente;
 
 	
-	@NotNull
 	@PastOrPresent(message = "{PastOrPresent.funcionario.dataEntrada}")
 	@DateTimeFormat(iso = ISO.DATE, pattern = "")
-	@Column(name= "data_inscricao", nullable = false, columnDefinition = "DATE")
+	@Column(name= "dtinscricao", nullable = false, columnDefinition = "DATE")
 	private LocalDate dataInscricao;
 
 	@DateTimeFormat(iso = ISO.DATE)
-	@Column(name = "data_saida", columnDefinition = "DATE")
+	@Column(name = "dtsaida", columnDefinition = "DATE")
 	private LocalDate dataSaida;
 	
 	@ManyToOne
@@ -45,7 +45,6 @@ public class Dependente extends Pessoa {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 
 	public TipoDependente getTipoDependente() {
 		return tipoDependente;
@@ -82,14 +81,4 @@ public class Dependente extends Pessoa {
 	}
 
 
-
-	
-/*
-	@NotNull(message = "{NotNull.funcionario.cargo}")
-	@ManyToOne
-	@JoinColumn(name = "cargo_id_fk")
-	private Cargo cargo;
-*/
-
-	
 }

@@ -129,6 +129,15 @@ public class Associado extends Pessoa {
 	}
 
 
+	@Override
+	public String toString() {
+		return "Associado [tipoAssociado=" + tipoAssociado + ", dataInscricao=" + dataInscricao + ", dataSaida="
+				+ dataSaida + ", endereco=" + endereco + ", dependentes=" + dependentes + ", visitantes=" + visitantes
+				+ ", usuario=" + usuario + "]";
+	}
+
+	
+
 
 	
 }

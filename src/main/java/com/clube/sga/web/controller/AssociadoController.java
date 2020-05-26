@@ -1,6 +1,7 @@
 package com.clube.sga.web.controller;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.clube.sga.domain.Associado;
+import com.clube.sga.domain.Dependente;
 import com.clube.sga.domain.EstadoCivil;
 import com.clube.sga.domain.TipoAssociado;
 import com.clube.sga.domain.UF;
@@ -43,10 +45,57 @@ public class AssociadoController {
 		return "associado/cadastro";
 	}
 	
+	// abrir pagina de dados dos dependentes do Associado	
+	@GetMapping("/dependentes")
+	public String cadastraDependente(Dependente dependente, ModelMap model, @AuthenticationPrincipal User user) {
+		Associado associado = service.buscarPorUsuarioEmail(user.getUsername());
+		dependente.setAssociado(associado);
+		model.addAttribute("dependente", dependente);
+		System.out.println("Associado - "+associado.getNome());
+		return "associado/cadastrodependente";
+	}
+
+	
 	// salvar o form de dados pessoais do Associado com verificacao de senha
 	@PostMapping("/salvar")
 	public String salvar(Associado associado, ModelMap model, @AuthenticationPrincipal User user) {
 		Usuario u = usuarioService.buscarPorEmail(user.getUsername());
+		if (UsuarioService.isSenhaCorreta(associado.getUsuario().getSenha(), u.getSenha())) {
+			Associado a2 = service.buscarPorUsuarioEmail(user.getUsername());
+			if (a2.hasNotId()) {
+				System.out.println("Primeira vez. Gravar o associado");
+				associado.setUsuario(u);
+				associado.setDataInscricao(LocalDate.now());
+				associado.setTipoAssociado(TipoAssociado.EFETIVO);
+				service.salvar(associado);
+				model.addAttribute("sucesso", "Seus dados foram inseridos com sucesso.");
+			} else {
+				System.out.println("Alterar um associado");
+				service.editar(associado);
+				model.addAttribute("sucesso", "Seus dados foram alterados com sucesso.");				
+			}
+		} else {
+			model.addAttribute("falha", "Sua senha não confere, tente novamente.");
+		}
+		return "associado/cadastro";
+	}
+	
+	@PostMapping("/salvarDependente")
+	public String salvarDependente(Dependente dependente, ModelMap model, @AuthenticationPrincipal User user) {
+		Associado associado = service.buscarPorUsuarioEmail(user.getUsername());
+        System.out.println(associado.getNome());
+        System.out.println(dependente.getNome());
+        associado.getDependentes().addAll(Arrays.asList(dependente));
+        System.out.println("Vindo de associados "+associado.getDependentes());
+        service.editar(associado);
+        System.out.println("Volta de salvar");
+/*        
+        if (!medico.getEspecialidades().isEmpty()) {
+			m2.getEspecialidades().addAll(medico.getEspecialidades());
+		}
+*/		
+        model.addAttribute("sucesso", "Seus dados foram inseridos com sucesso.");
+		/**		Usuario u = usuarioService.buscarPorEmail(user.getUsername());
 		if (UsuarioService.isSenhaCorreta(associado.getUsuario().getSenha(), u.getSenha())) {
 			associado.setUsuario(u);
 			associado.setDataInscricao(LocalDate.now());
@@ -56,8 +105,12 @@ public class AssociadoController {
 		} else {
 			model.addAttribute("falha", "Sua senha não confere, tente novamente.");
 		}
-		return "associado/cadastro";
-	}	
+*/		
+		return "associado/cadastrodependente";
+	}
+	
+
+	
 
     // pre edicao de credenciais de Associados
     @GetMapping("/editar/credenciais/associado/{id}")
@@ -110,6 +163,8 @@ public class AssociadoController {
 		return TipoAssociado.values();
 	}
 
+
+	
 	@ModelAttribute("estadoCivis")
 	public EstadoCivil[] getEstadoCivis() {
 		return EstadoCivil.values();

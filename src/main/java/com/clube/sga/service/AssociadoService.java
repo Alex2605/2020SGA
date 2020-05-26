@@ -30,27 +30,32 @@ public class AssociadoService {
 	}
 
 	@Transactional(readOnly = false)
-	public void salvar(Associado Associado) {
-		System.out.println("Salvar associado via tela do mesmo");
-		repository.save(Associado);		
+	public void salvar(Associado associado) {
+		repository.save(associado);		
 	}
 
 	@Transactional(readOnly = false)
-	public void editar(Associado Associado) {
-		Associado p2 = repository.findById(Associado.getId()).get();
-		p2.setNome(Associado.getNome());
-		p2.setCPF(Associado.getCPF());
-		p2.setDataNascimento(Associado.getDataNascimento());
-		p2.setEstadoCivil(Associado.getEstadoCivil());
+	public void editar(Associado associado) {
+		
+		Associado p2 = repository.findById(associado.getId()).get();
+		p2.setNome(associado.getNome());
+		p2.setCPF(associado.getCPF());
+		p2.setDataNascimento(associado.getDataNascimento());
+		p2.setEstadoCivil(associado.getEstadoCivil());
+		p2.setTipoAssociado(associado.getTipoAssociado());
+		p2.setEndereco(associado.getEndereco());
+
+		if (!associado.getDependentes().isEmpty()) {
+			System.out.println("Insere o dependente "+associado.getDependentes());
+			p2.getDependentes().addAll(associado.getDependentes());
+		}
+		salvar(p2);
 	}
 
 	@Transactional(readOnly = true)
 	public Map<String, Object> buscarTodos(HttpServletRequest request) {
 		datatables.setRequest(request);
 		datatables.setColunas(DatatablesColunas.ASSOCIADOS);
-		System.out.println("Valor para datatables.getSearch() :" + datatables.getSearch().isEmpty());
-		System.out.println("valor para request: "+ request.toString());
-		
 		Page<Associado> page = datatables.getSearch().isEmpty()
 				? repository.findAll(datatables.getPageable())
 				: repository.findBySearchPageable(datatables.getSearch(), datatables.getPageable());

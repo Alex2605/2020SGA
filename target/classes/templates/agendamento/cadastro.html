@@ -13,8 +13,8 @@
 			<img class="d-block mx-auto" th:src="@{/image/spring-security.png}"
 				width="72" height="72">
 			<div class="container">
-				<h1 class="jumbotron-heading">Clínica Spring Security</h1>
-				<p class="lead text-muted">Médicos e Especialistas</p>
+				<h1 class="jumbotron-heading">Sistema de Gerenciamento Administrativo</h1>
+				<p class="lead text-muted">Clube XPTO</p>
 			</div>
 		</section>
 
@@ -30,54 +30,45 @@
 							th:object="${agendamento}"
 							method="POST" class="was-validated">
 							
-							<div class="form-row">
-								<div class="form-group col-md-12">
+		                    <div class="mb-3">
+		                        <label for="tipoServico">Selecione o tipo de servico desejado</label>
+				                        <select id="tipoServico" class="form-control" th:field="*{servico.tipoServico}" onChange="updateServico()">
+				                            <option value="">Selecione...</option>
+				                            <option th:each="t : ${tipoServicos}" th:value="${t}" th:text="${t.descricao}"></option>
+				                        </select>
+		                    </div>
+									  									    
+							<div class="form-row" id="dataInicio">								
+								<div class="form-group col-mb-3">
 									<small class="form-text text-muted">Selecione 
-										a especialidade médica referente a sua consulta.</small>
-									<input type="text" class="form-control"
-										id="especialidade" placeholder="Pediatria"
-										th:field="*{especialidade.titulo}" required />
+										a data da reserva</small>
+									<input class="form-control" type="date" id=dtInicio 
+										th:field="*{dataInicio}" onblur="validaDataInicio()" required/>
 									<div class="invalid-feedback">
-								      Especialidade é obrigatória.
-								    </div>
-								</div>
-							</div>
-	
-							<div class="form-row">
-								<div class="form-group col-md-12">
-									<div class="card">
-									  <div class="card-header">
-									    Indique o médico desejado
-									  </div>
-									  <div class="card-body" id="medicos">										  									    
-											<!-- options by jQuery -->
-									  </div>									  							  
-									</div>
-								</div>
-							</div>
-							
-							<div class="form-row">								
-								<div class="form-group col-md-12">
-									<small class="form-text text-muted">Selecione 
-										a data da consulta</small>
-									<input class="form-control" type="date" id="data" 
-										th:field="*{dataConsulta}" required/>
-									<div class="invalid-feedback">
-								      Data é obrigatória.
+								      Data início da reserva é obrigatória.
 								    </div>	
 								</div>
 							</div>
-							
-							<div class="form-row">
+							<div class="form-row" id="dataFim">								
+								<div class="form-group col-mb-3">
+									<small class="form-text text-muted">Selecione 
+										a data da reserva</small>
+									<input class="form-control" type="date" id="dtFim" 
+										th:field="*{dataFim}"  required/>
+									<div class="invalid-feedback">
+								      Data final de reserva é obrigatória.
+								    </div>	
+								</div>
+							</div>
+							<div class="form-row" id="listaServico">
 								<div class="form-group col-md-12">
-									<small id="hr-small" class="form-text text-muted">Horários disponíveis
-										para a consulta</small>
-									<select id="horarios" class="custom-select" size="5" 
-										th:field="*{horario.id}" required>
-									  	<option th:value="*{horario.id}" 
-									  			th:text="*{horario.horaMinuto}"></option>
+									<small id="hr-small" class="form-text text-muted">Indique qual o serviço desejado</small>
+									<select id="servicos" class="custom-select" size="5" 
+										th:field="*{servico.id}" required>
+									  	<option th:value="*{servico.id}" 
+									  			th:text="*{servico.titulo}"></option>
 									</select>
-									<div class="invalid-feedback">Horário é obrigatório</div>
+									<div class="invalid-feedback">É necessário selecionar o serviço</div>
 								</div>
 							</div>
 							
@@ -102,22 +93,74 @@
 	</section>
 	<script	th:src="@{/js/agendamento.js(v=${version})}" th:fragment="js"></script>
 	<script th:inline="javascript" th:fragment="inlinescript">
+	$('#dtFim').on('blur', function () {
+		carregaServico();
+	});
+	
+	function updateServico() {
+		$('#dtInicio').val("");
+		$('#dtInicio').val("");	
+		$("#servicos").empty();
+		$("#dataInicio").hide();
+		$("#dataFim").hide();
+		var select = document.getElementById('tipoServico');
+		var tipoServico = select.options[select.selectedIndex];
+		$("#dataInicio").show();
+		if (tipoServico.value == "CHALE") {
+			  $("#dataFim").show();
+			} 
+	};
+	
+
+	function validaDataInicio(){
+		if (tipoServico.value != "CHALE"){
+			carregaServico();
+		}
+	};
+	
+	function validaDataFim(){
+		carregaServico();
+	};
+	
+	function carregaServico() {
+		$("#servicos").empty();
+		if (tipoServico.value != "CHALE"){
+			var dtInicio =  $('#dtInicio').val();
+			var dtFim    = $('#dtInicio').val();
+		} else {
+			var dtInicio =  $('#dtInicio').val();
+			var dtFim    = $('#dtFim').val();			
+		}		
+		console.log('Data Início -> '+ dtInicio);
+		console.log('Data fim -> '+ dtFim);		
+		$.get('/agendamentos/servico/'+ tipoServico.value + '/dataIni/' + dtInicio + '/dataFim/'+dtFim, function( result ) {
+            $.each(result, function (k, v) {
+                $("#servicos").append( 
+                    '<option class="op" value="'+ v.id +'">'+ v.titulo + '</option>'
+                );	            			
+            });
+        });		
+	}
+	
 	// buscar o médico pela especialidade
-	/*[# th:if="${agendamento.medico != null}" ]*/
+	/*[# th:if="${agendamento.servico != null}" ]*/	
 		$( document ).ready(function() {
-			var id = [[${agendamento.medico.id}]];
-			var titulo = [(${#strings.concat("'",agendamento.especialidade.titulo,"'")})];
-			$.get( "/medicos/especialidade/titulo/" + titulo, function( result ) {
+			$("#dataInicio").hide();
+			$("#dataFim").hide();			
+			var id = [[${agendamento.servico.id}]];
+			var titulo = [(${#strings.concat("'",agendamento.servico.titulo,"'")})];
+			$.get( "/servicos/servico/titulo/" + titulo, function( result ) {
 				$.each(result, function (k, v) {
-					$("#medicos").append(
+					$("#servicosDisponiveis").append(
 						 '<div class="custom-control custom-radio">'
-						+  '<input class="custom-control-input" type="radio" id="customRadio'+ k +'" name="medico.id" value="'+ v.id +'" required '+ (v.id == id ? "checked" : "")+' />'
+						+  '<input class="custom-control-input" type="radio" id="customRadio'+ k +'" name="servico.id" value="'+ v.id +'" required '+ (v.id == id ? "checked" : "")+' />'
 						+  '<label class="custom-control-label" for="customRadio'+ k +'">'+ v.nome +'</label>'
 						+'</div>'
 					);
 				});
 			});
 		});
+
 	/*[/]*/
 	</script>
 </body>

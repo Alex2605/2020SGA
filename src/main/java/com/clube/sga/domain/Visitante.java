@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -18,18 +16,12 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @Table(name = "VISITANTES")
 public class Visitante extends Pessoa {
 
-
 	
-	@NotNull
-	@PastOrPresent(message = "{PastOrPresent.funcionario.dataEntrada}")
 	@DateTimeFormat(iso = ISO.DATE, pattern = "")
-	@Column(name= "data_inscricao", nullable = false, columnDefinition = "DATE")
-	private LocalDate dataInscricao;
+	@Column(name= "dtvisita", nullable = false, columnDefinition = "DATE")
+	private LocalDate dataVisita;
 
-	@DateTimeFormat(iso = ISO.DATE)
-	@Column(name = "data_saida", columnDefinition = "DATE")
-	private LocalDate dataSaida;
-	
+		
 	@ManyToOne
 	@JoinColumn(name = "associado_id")
 	private Associado associado;
@@ -41,21 +33,12 @@ public class Visitante extends Pessoa {
 
 
 	public LocalDate getDataInscricao() {
-		return dataInscricao;
+		return dataVisita;
 	}
 
-	public void setDataInscricao(LocalDate dataInscricao) {
-		this.dataInscricao = dataInscricao;
+	public void setDataInscricao(LocalDate dataVisita) {
+		this.dataVisita = dataVisita;
 	}
-
-	public LocalDate getDataSaida() {
-		return dataSaida;
-	}
-
-	public void setDataSaida(LocalDate dataSaida) {
-		this.dataSaida = dataSaida;
-	}
-
 
 	public Associado getAssociado() {
 		return associado;
@@ -65,15 +48,5 @@ public class Visitante extends Pessoa {
 	public void setAssociado(Associado associado) {
 		this.associado = associado;
 	}
-
-
-	
-/*
-	@NotNull(message = "{NotNull.funcionario.cargo}")
-	@ManyToOne
-	@JoinColumn(name = "cargo_id_fk")
-	private Cargo cargo;
-*/
-
 	
 }

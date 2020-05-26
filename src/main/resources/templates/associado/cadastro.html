@@ -63,7 +63,7 @@
 								</div>
 							</div>							
 							<div class="mb-3">
-								<label for="nome">Data de Nascimento</label>
+								<label for="dataNascimento">Data de Nascimento</label>
 								<div class="input-group">
 									<input type="date" class="form-control" id="dataNascimento"
 										   aria-describedby="validationTooltipUsernamePrepend"
@@ -79,6 +79,72 @@
 			                            <option th:each="t : ${estadoCivis}" th:value="${t}" th:text="${t.descricao}"></option>
 			                        </select>
 	                    </div>
+<!-- ################################################################################################################################################ -->
+	                    <div class="form-group col-md-6">
+	                        <label for="cep">Cep</label>
+	                        <input type="text" class="form-control" id="cep" data-mask="00000-000" 
+	                               th:field="*{endereco.cep}"
+	                               th:classappend="${#fields.hasErrors('endereco.cep')} ? 'is-invalid'"/>
+	                        <div class="invalid-feedback">
+								<span th:errors="*{endereco.cep}"></span>
+	                        </div>
+	                    </div>
+
+	                    <div class="mb-3">
+	                        <label for="numero">Logradouro</label>
+	                        <input type="text" class="form-control" id="logradouro" th:field="*{endereco.logradouro}"
+	                               th:classappend="${#fields.hasErrors('endereco.logradouro')} ? 'is-invalid'"/>
+	                        <div class="invalid-feedback">
+			        			<span th:errors="*{endereco.logradouro}"></span>
+			   				</div>
+	                    </div>
+	                    
+	                    <div class="form-group col-md-5">
+	                        <label for="numero">Número</label>
+	                        <input type="text" class="form-control" id="numero" th:field="*{endereco.numero}"
+	                               th:classappend="${#fields.hasErrors('endereco.numero')} ? 'is-invalid'"/>
+	                        <div class="invalid-feedback">
+			        			<span th:errors="*{endereco.numero}"></span>
+			   				</div>
+	                    </div>
+	                    <div class="form-group col-md-5">
+	                        <label for="complemento">Complemento</label>
+	                        <input type="text" class="form-control" id="complemento" 
+	                               placeholder="fundos, casa, AP. 102, .." th:field="*{endereco.complemento}"
+	                               th:classappend="${#fields.hasErrors('endereco.complemento')} ? 'is-invalid'"/>
+							<div class="invalid-feedback">
+				        		<span th:errors="*{endereco.complemento}"></span>
+				   			</div>	
+	                    </div>
+	                    <div class="form-group col-md-5">
+	                        <label for="bairro">Bairro</label>
+	                        <input type="text" class="form-control" id="bairro" th:field="*{endereco.bairro}"
+	                               th:classappend="${#fields.hasErrors('endereco.bairro')} ? 'is-invalid'"/>
+	                        <div class="invalid-feedback">
+								<span th:errors="*{endereco.bairro}"></span>
+	                        </div>
+	                    </div>
+
+	                    <div class="form-group col-md-7">
+	                        <label for="cidade">Cidade</label>
+	                        <input type="text" class="form-control" id="cidade" th:field="*{endereco.cidade}"
+	                               th:classappend="${#fields.hasErrors('endereco.cidade')} ? 'is-invalid'"/>
+	                        <div class="invalid-feedback">
+								<span th:errors="*{endereco.cidade}"></span>
+	                        </div>
+	                    </div>
+	                    <div class="form-group col-md-5">
+	                        <label for="uf">UF</label>
+	                        <select id="uf" class="form-control" th:field="*{endereco.uf}"
+	                                th:classappend="${#fields.hasErrors('endereco.uf')} ? 'is-invalid'">
+	                            <option value="">Selecione...</option>
+	                            <option th:each="uf : ${ufs}" th:value="${uf}" th:text="${uf.sigla}"></option>
+	                        </select>
+	                        <div class="invalid-feedback">
+								<span th:errors="*{endereco.uf}"></span>
+	                        </div>
+	                    </div>
+<!-- ################################################################################################################################################ -->
 	                    
 							<div class="mb-3">
 								<label for="senha">Senha</label> 
@@ -88,6 +154,7 @@
 							</div>							
 
 							<input type="hidden" th:field="*{id}"> 
+							<input type="hidden" id="endereco.id" th:field="*{endereco.id}"/>
 							<div class="form-group row">
 								<div class="col-sm-10">
 									<button type="submit" class="btn btn-primary"

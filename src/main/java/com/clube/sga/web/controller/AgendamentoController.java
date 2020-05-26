@@ -11,17 +11,20 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.clube.sga.domain.Agendamento;
-import com.clube.sga.domain.Especialidade;
-import com.clube.sga.domain.Paciente;
+import com.clube.sga.domain.Associado;
+import com.clube.sga.domain.Servico;
+import com.clube.sga.domain.TipoServico;
 import com.clube.sga.service.AgendamentoService;
-import com.clube.sga.service.EspecialidadeService;
-import com.clube.sga.service.PacienteService;
+import com.clube.sga.service.AssociadoService;
+import com.clube.sga.service.ServicoService;
+
 
 @Controller
 @RequestMapping("agendamentos")
@@ -30,9 +33,9 @@ public class AgendamentoController {
 	@Autowired
 	private AgendamentoService service;
 	@Autowired
-	private PacienteService pacienteService;
+	private AssociadoService associadoService;
 	@Autowired
-	private EspecialidadeService especialidadeService;	
+	private ServicoService servicoService;	
 
 	// abre a pagina de agendamento de consultas 
 	@GetMapping({"/agendar"})
@@ -41,42 +44,50 @@ public class AgendamentoController {
 		return "agendamento/cadastro";		
 	}
 	
-	// busca os horarios livres, ou seja, sem agendamento
-	@GetMapping("/horario/medico/{id}/data/{data}")
-	public ResponseEntity<?> getHorarios(@PathVariable("id") Long id,
-										 @PathVariable("data") @DateTimeFormat(iso = ISO.DATE) LocalDate data) {
-		
-		return ResponseEntity.ok(service.buscarHorariosNaoAgendadosPorMedicoIdEData(id, data));
+	// busca os servicos livres, ou seja, sem agendamento
+	@GetMapping("/servico/{tipo}/dataIni/{dataIni}/dataFim/{dataFim}")
+	public ResponseEntity<?> getServicos(@PathVariable("tipo") String tipo,
+										 @PathVariable("dataIni") @DateTimeFormat(iso = ISO.DATE) LocalDate dataIni,
+										 @PathVariable("dataFim") @DateTimeFormat(iso = ISO.DATE) LocalDate dataFim){
+		System.out.println("Passo aqui com os parâmetros "
+				+ tipo +", "+ dataIni+", "+dataFim);
+		return ResponseEntity.ok(service.buscarServicosNaoAgendadosPorIdEData(tipo, dataIni, dataFim));
 	}
 	
 	// salvar um consulta agendada
 	@PostMapping({"/salvar"})
 	public String salvar(Agendamento agendamento, RedirectAttributes attr, @AuthenticationPrincipal User user) {
-		Paciente paciente = pacienteService.buscarPorUsuarioEmail(user.getUsername());
-		String titulo = agendamento.getEspecialidade().getTitulo();
-		Especialidade especialidade = especialidadeService
-				.buscarPorTitulos(new String[] {titulo})
-				.stream().findFirst().get();
-		agendamento.setEspecialidade(especialidade);
-		agendamento.setPaciente(paciente);
-		service.salvar(agendamento);
-		attr.addFlashAttribute("sucesso", "Sua consulta foi agendada com sucesso.");
+		Associado associado = associadoService.buscarPorUsuarioEmail(user.getUsername());
+		System.out.println("Entra em salvar agendamento");
+		System.out.println("01 "+ agendamento.toString());
+		System.out.println();
+//		String titulo = agendamento.getServico().getTitulo(); // getTipoServico().getDescricao();
+		Servico servico = servicoService.buscarPorId(agendamento.getServico().getId());
+//		Servico servico = servicoService.buscarPorTitulo(titulo);
+//		System.out.println("Valor de titulo - "+titulo);
+		agendamento.setServico(servico);
+		agendamento.setAssociado(associado);
+		System.out.println(servico.toString());
+		System.out.println("02 "+ agendamento.toString());
+		
+//		service.salvar(agendamento);
+		attr.addFlashAttribute("sucesso", "Sua reserva foi efetuada com sucesso. ");
 		return "redirect:/agendamentos/agendar";		
 	}
 	
-	// abrir pagina de historico de agendamento do paciente
-	@GetMapping({"/historico/paciente", "/historico/consultas"})
+	// abrir pagina de historico de agendamento do associado
+	@GetMapping({"/historico/associado", "/historico/consultas"})
 	public String historico() {
 
-		return "agendamento/historico-paciente";
+		return "agendamento/historico-associado";
 	}
 /*	
 	// localizar o historico de agendamentos por usuario logado
 	@GetMapping("/datatables/server/historico")
-	public ResponseEntity<?> historicoAgendamentosPorPaciente(HttpServletRequest request, @AuthenticationPrincipal User user) {
+	public ResponseEntity<?> historicoAgendamentosPorAssociado(HttpServletRequest request, @AuthenticationPrincipal User user) {
 		if (user.getAuthorities().contains(new SimpleGrantedAuthority(PerfilTipo.PACIENTE.getDesc()))) {
 			
-			return ResponseEntity.ok(service.buscarHistoricoPorPacienteEmail(user.getUsername(), request));
+			return ResponseEntity.ok(service.buscarHistoricoPorAssociadoEmail(user.getUsername(), request));
 		}
 		
 		if (user.getAuthorities().contains(new SimpleGrantedAuthority(PerfilTipo.MEDICO.getDesc()))) {
@@ -89,25 +100,23 @@ public class AgendamentoController {
 */	
 	// localizar agendamento pelo id e envia-lo para a pagina de cadastro
 	@GetMapping("/editar/consulta/{id}") 
-	public String preEditarConsultaPaciente(@PathVariable("id") Long id, 
+	public String preEditarConsultaAssociado(@PathVariable("id") Long id, 
 										    ModelMap model, @AuthenticationPrincipal User user) {
 		
-		Agendamento agendamento = service.buscarPorIdEUsuario(id, user.getUsername());
+//		Agendamento agendamento = service.buscarPorIdEUsuario(id, user.getUsername());
 		
-		model.addAttribute("agendamento", agendamento);
+//		model.addAttribute("agendamento", agendamento);
 		return "agendamento/cadastro";
 	}
 	
 	@PostMapping("/editar")
 	public String editarConsulta(Agendamento agendamento, RedirectAttributes attr, @AuthenticationPrincipal User user) {
-		String titulo = agendamento.getEspecialidade().getTitulo();
-		Especialidade especialidade = especialidadeService
-				.buscarPorTitulos(new String[] {titulo})
-				.stream().findFirst().get();
-		agendamento.setEspecialidade(especialidade);
+		String titulo = agendamento.getServico().getTitulo();
+		Servico servico = servicoService.buscarPorTitulo(titulo);
+		agendamento.setServico(servico);
 		
 		service.editar(agendamento, user.getUsername());
-		attr.addFlashAttribute("sucesso", "Sua consulta froi alterada com sucesso.");
+		attr.addFlashAttribute("sucesso", "Sua Reserva foi alterada com sucesso.");
 		return "redirect:/agendamentos/agendar";
 	}
 	
@@ -115,7 +124,12 @@ public class AgendamentoController {
 	public String excluirConsulta(@PathVariable("id") Long id, RedirectAttributes attr) {
 		service.remover(id);
 		attr.addFlashAttribute("sucesso", "Consulta excluída com sucesso.");
-		return "redirect:/agendamentos/historico/paciente";
+		return "redirect:/agendamentos/historico/associado";
 	}
 
+	@ModelAttribute("tipoServicos")
+	public TipoServico[] getTipoServicos() {
+		return TipoServico.values();
+	}
+	
 }
