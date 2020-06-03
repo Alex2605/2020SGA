@@ -1,14 +1,12 @@
 package com.clube.sga.domain;
 
 public enum TipoDependente {
-	CONJUGE(1, "Esposo(a)"),
+	CONJUGE(1, "Cônjuge"),
 	FILHO(2, "Filho(a)"),
 	PAIMAE(3,"Pai/Mãe"),
 	ENTEADO(4,"Enteado"),
 	AGREGADO(5,"Agredado"),
-	COMPANHEIRO(6,"Companheiro(a)"),
-	TUTELADO(7, "Tutelado"),
-	OUTROS(8,"Outros");
+	COMPANHEIRO(6,"Companheiro(a)");
 	
 	private int cod;
 	private String descricao;

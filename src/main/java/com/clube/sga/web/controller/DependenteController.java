@@ -41,9 +41,9 @@ public class DependenteController {
 	}
 
 	@GetMapping("/datatables/server")
-	public ResponseEntity<?> getDependentes(HttpServletRequest request) {
-
-		return ResponseEntity.ok(service.buscarDependentes(request));
+	public ResponseEntity<?> getDependentes(HttpServletRequest request, @AuthenticationPrincipal User user) {
+		Associado associado = associadoService.buscarPorUsuarioEmail(user.getUsername());
+		return ResponseEntity.ok(service.buscarDependentePorAssociado(associado.getId(), request));
 	}
 
 	@PostMapping("/salvar")

@@ -26,7 +26,7 @@ public abstract class Pessoa extends AbstractEntity {
 	private String nome;
 
 //	@Size(min = 12, max = 12, message = "{Size.pessoa.cpf}")
-	@Column(nullable = true, length = 12, unique = true)
+	@Column(nullable = true, unique = true)
 	private String CPF;
 	
 	@NotNull

@@ -40,7 +40,7 @@ public class DependenteService {
 		
 		repository.deleteById(id);
 	}
-
+/*
 	@Transactional(readOnly = true)
 	public Map<String, Object> buscarDependentes(HttpServletRequest request) {
 		datatables.setRequest(request);
@@ -48,5 +48,12 @@ public class DependenteService {
 		Page<?> page = repository.findAll(datatables.getPageable()); 
 		return datatables.getResponse(page);
 	}
-	
+*/	
+	@Transactional(readOnly = true)
+	public Map<String, Object> buscarDependentePorAssociado(Long Id, HttpServletRequest request) {
+		datatables.setRequest(request);
+		datatables.setColunas(DatatablesColunas.DEPENDENTES);
+		Page<?> page = repository.findByAssociado(Id, datatables.getPageable()); 
+		return datatables.getResponse(page);
+	}	
 }

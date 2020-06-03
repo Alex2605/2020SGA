@@ -56,7 +56,7 @@
 							<div class="mb-3">
 								<label for="cpf">Número CPF (somente números)</label>
 								<div class="input-group">
-									<input type="text" class="form-control" id="CPF" placeholder="insira o número do CPF" 
+									<input type="text" class="form-control" onkeypress="$(this).mask('000.000.000-00')" id="CPF" placeholder="insira o número do CPF" 
 											aria-describedby="validationTooltipUsernamePrepend"
 										    th:field="*{CPF}" required />
 									<div class="invalid-feedback">O CPF é requerido.</div>
@@ -82,7 +82,7 @@
 <!-- ################################################################################################################################################ -->
 	                    <div class="form-group col-md-6">
 	                        <label for="cep">Cep</label>
-	                        <input type="text" class="form-control" id="cep" data-mask="00000-000" 
+	                        <input type="text" class="form-control" onkeypress="$(this).mask('00.000-000')"  id="cep"  
 	                               th:field="*{endereco.cep}"
 	                               th:classappend="${#fields.hasErrors('endereco.cep')} ? 'is-invalid'"/>
 	                        <div class="invalid-feedback">

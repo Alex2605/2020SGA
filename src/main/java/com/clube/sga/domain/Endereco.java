@@ -38,8 +38,7 @@ public class Endereco extends AbstractEntity {
 	private UF uf;
 	
 	@NotBlank
-	@Size(min = 9, max = 9, message = "{Size.endereco.cep}")
-	@Column(nullable = false, length = 9)
+	@Column(nullable = false)
 	private String cep;
 	
 	@NotNull(message = "{NotNull.endereco.numero}")

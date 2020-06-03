@@ -58,19 +58,10 @@ public class AgendamentoController {
 	@PostMapping({"/salvar"})
 	public String salvar(Agendamento agendamento, RedirectAttributes attr, @AuthenticationPrincipal User user) {
 		Associado associado = associadoService.buscarPorUsuarioEmail(user.getUsername());
-		System.out.println("Entra em salvar agendamento");
-		System.out.println("01 "+ agendamento.toString());
-		System.out.println();
-//		String titulo = agendamento.getServico().getTitulo(); // getTipoServico().getDescricao();
 		Servico servico = servicoService.buscarPorId(agendamento.getServico().getId());
-//		Servico servico = servicoService.buscarPorTitulo(titulo);
-//		System.out.println("Valor de titulo - "+titulo);
 		agendamento.setServico(servico);
 		agendamento.setAssociado(associado);
-		System.out.println(servico.toString());
-		System.out.println("02 "+ agendamento.toString());
-		
-//		service.salvar(agendamento);
+		service.salvar(agendamento);
 		attr.addFlashAttribute("sucesso", "Sua reserva foi efetuada com sucesso. ");
 		return "redirect:/agendamentos/agendar";		
 	}
