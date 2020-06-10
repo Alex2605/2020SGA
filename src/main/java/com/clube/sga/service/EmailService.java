@@ -28,8 +28,8 @@ public class EmailService {
 		Context context = new Context();
 		context.setVariable("titulo", "Bem vindo ao Clube XPTO!");
 		context.setVariable("texto", "Precisamos que confirme o seu cadastro, clicando no link abaixo");
-		//context.setVariable("linkConfirmacao", "http://localhost:8080/u/confirmacao/cadastro?codigo="+codigo);
-		context.setVariable("linkConfirmacao", "https://cederj-sga.herokuapp.com/u/confirmacao/cadastro?codigo="+codigo);
+		context.setVariable("linkConfirmacao", "http://localhost:8080/u/confirmacao/cadastro?codigo="+codigo);
+		//context.setVariable("linkConfirmacao", "https://cederj-sga.herokuapp.com/u/confirmacao/cadastro?codigo="+codigo);
 
 		String html = template.process("email/confirmacao", context);
 		helper.setTo(destino);

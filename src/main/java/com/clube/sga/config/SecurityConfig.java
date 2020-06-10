@@ -30,12 +30,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/u/novo/cadastro","/u/cadastro/realizado","/u/cadastro/paciente/salvar").permitAll()
 			.antMatchers("/u/confirmacao/cadastro").permitAll()
 			.antMatchers("/u/p/**").permitAll()
-
+			.antMatchers("/relatorios/associados").permitAll()
 			// acessos privados do usuario
 			.antMatchers("/u/listar/associados").hasAuthority(USUARIO)
 			.antMatchers("/associados/editar/credenciais/associado/**").hasAuthority(USUARIO)
 			.antMatchers("/associados/excluir/**").hasAuthority(USUARIO)
 			.antMatchers("/associados/usuario/editar").hasAuthority(USUARIO)
+			.antMatchers("/relatorios/associados").hasAuthority(USUARIO)
+
 			
 			// acessos privados admin
 			.antMatchers("/u/editar/senha", "/u/confirmar/senha").hasAnyAuthority(ADMIN, USUARIO, ASSOCIADO)
