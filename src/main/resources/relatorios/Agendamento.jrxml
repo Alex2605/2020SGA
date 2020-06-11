@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Agendamento" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3c47cf7e-4a02-4124-922e-7949abc54cf0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     agendamentos.`id` AS agendamentos_id,
+     servicos.`tipo_servico` AS servicos_tipo_servico,
+     servicos.`titulo` AS servicos_titulo,
+     associados.`nome` AS associados_nome,
+     agendamentos.`dtinicio` AS agendamentos_dtinicio,
+     agendamentos.`dtfim` AS agendamentos_dtfim
+FROM
+     `agendamentos` agendamentos
+INNER JOIN `associados` associados  ON agendamentos.`id_associado` = associados.`id`
+INNER JOIN `servicos` servicos ON agendamentos.`id_servico` = servicos.`id`]]>
+	</queryString>
+	<field name="agendamentos_id" class="java.lang.Long"/>
+	<field name="servicos_tipo_servico" class="java.lang.String"/>
+	<field name="servicos_titulo" class="java.lang.String"/>
+	<field name="associados_nome" class="java.lang.String"/>
+	<field name="agendamentos_dtinicio" class="java.sql.Date"/>
+	<field name="agendamentos_dtfim" class="java.sql.Date"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="-20" width="555" height="92" backcolor="#009966" uuid="f2760b9a-b7e6-4c9a-b4c1-f8cdbb898320"/>
+				<staticText>
+					<reportElement x="20" y="43" width="234" height="43" forecolor="#FFFFFF" uuid="ae171537-cb01-4b1c-a951-cb438115823d"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Clube XPTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="372" y="66" width="180" height="20" forecolor="#FFFFFF" uuid="78739981-079d-4f02-9386-e28e252256cb"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Lista de Agendamentos]]></text>
+				</staticText>
+				<image hAlign="Center" vAlign="Middle">
+					<reportElement x="275" y="3" width="74" height="70" uuid="0d78498c-c676-4cf5-bbcc-bd87ca9e740f"/>
+					<imageExpression><![CDATA["C:\\Users\\alexa\\OneDrive\\WSTCC_2020\\SGA\\src\\main\\resources\\static\\image\\spring-security.png"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="59a6521d-e4fc-46a6-a707-86db5de69893"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="32" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="926cf7e0-7c0e-4f2d-a082-e72f359fd820"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="32" y="0" width="113" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="dfdf11c3-ec3e-47de-bdc8-e244149d8bb0"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[tipo servico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="144" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="19085c54-da93-425d-9a42-dcdd498bcb80"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="236" y="0" width="162" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="63b84cfe-ec3a-4f31-9f05-cefe6503223a"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[associado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="398" y="0" width="77" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="0b502105-86a5-452f-b7a9-76b32ea591e2"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[início]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="475" y="0" width="77" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="c72d31e0-06bd-4aa2-b9c0-2b1db24615df"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[fim]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="15f00868-74ac-4885-ab97-a7983c81f652"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="32" height="20" uuid="60311fd4-e4e7-4ae9-baf7-5a77cb5cccbb"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agendamentos_id}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="32" y="0" width="113" height="20" uuid="7cb8da47-971b-4fdf-9750-8f65bfac2600"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servicos_tipo_servico}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="144" y="0" width="92" height="20" uuid="89218873-59cc-4de9-b540-7b4e341044b1"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servicos_titulo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="236" y="0" width="162" height="20" uuid="b49c4845-cf16-440a-be0a-ace59d140ac6"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{associados_nome}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement x="398" y="0" width="77" height="20" uuid="3ac9d9d3-c188-47e1-b9b7-43d201aba59c"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agendamentos_dtinicio}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement x="475" y="0" width="77" height="20" uuid="ea1ed829-e8d4-413f-821f-5e3d574026da"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agendamentos_dtfim}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="ae119960-ef0a-46b1-b049-415ab099b658"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="483b8d9b-5cdb-4e93-98c5-8cd22ddc2810"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="c2495abb-d247-437f-9048-ea3be7333d86"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

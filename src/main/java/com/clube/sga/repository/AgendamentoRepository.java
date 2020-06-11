@@ -3,6 +3,8 @@ package com.clube.sga.repository;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,7 +24,11 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long>{
 			+ ") "
 			+ "order by s.id asc")
 	List<Servico> findByServicoIdAndDataNotHorarioAgendado(String tipo, LocalDate dataIni, LocalDate dataFim);
-/*
+
+	@Query("select a from Agendamento a where a.associado.id = :Id")
+	Page<Agendamento> findByAssociadoOrAll(Long Id, Pageable pageable);
+
+	/*
 	@Query("select a.id as id,"
 				+ "a.paciente as paciente,"
 				+ "CONCAT(a.dataConsulta, ' ', a.horario.horaMinuto) as dataConsulta,"

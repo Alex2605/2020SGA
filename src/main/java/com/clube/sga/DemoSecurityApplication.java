@@ -21,7 +21,8 @@ public class DemoSecurityApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		//service.enviarPedidoConfirmacaoDeCadastro("alexanderprof@yahoo.com.br", "1759ALx92");
-		//JasperCompileManager.compileReportToFile("C:\\Users\\alexa\\Associados.jrxml");
+		//JasperCompileManager.compileReportToFile("C:\\Users\\alexa\\OneDrive\\Alex Mental\\CEDERJ\\2019\\TCC\\Relatórios\\Associados.jrxml");
+		
 
 	}
 

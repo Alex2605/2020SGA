@@ -22,10 +22,10 @@
 			<div class="container d-flex justify-content-center align-items-center">
 
 				<div class="row">
-					<div class="col-md-12">					
-					
-						<div th:replace="fragments/alert :: alerta-sucesso"></div>
-												
+					<div class="col-md-12">
+						<div>
+							<div th:replace="fragments/alert :: alerta-sucesso"></div>
+						</div>					
 						<form th:action="${agendamento.id == null} ? @{/agendamentos/salvar} : @{/agendamentos/editar}" 
 							th:object="${agendamento}"
 							method="POST" class="was-validated">
@@ -54,7 +54,7 @@
 									<small class="form-text text-muted">Selecione 
 										a data da reserva</small>
 									<input class="form-control" type="date" id="dtFim" 
-										th:field="*{dataFim}"  required/>
+										th:field="*{dataFim}"  />
 									<div class="invalid-feedback">
 								      Data final de reserva é obrigatória.
 								    </div>	
@@ -142,7 +142,6 @@
         });		
 	}
 	
-	// buscar o médico pela especialidade
 	/*[# th:if="${agendamento.servico != null}" ]*/	
 		$( document ).ready(function() {
 			$("#dataInicio").hide();

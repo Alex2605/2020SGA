@@ -256,11 +256,11 @@ public class UsuarioController {
 @GetMapping("/listar/associados/imprimir")
 public void imprimir(Map<String, Object> parametros, HttpServletResponse response) throws JRException, SQLException, IOException {
 	
-	System.out.println("Passo aqui. Me apague depois");
-	
+		
 	parametros = parametros == null ? parametros = new HashMap<>() : parametros;
 	
 	// Pega o arquivo .jasper localizado em resources
+	//InputStream jasperStream = this.getClass().getResourceAsStream("/relatorios/Associados.jasper");
 	InputStream jasperStream = this.getClass().getResourceAsStream("/relatorios/Associados.jasper");
 	
 	// Cria o objeto JaperReport com o Stream do arquivo jasper

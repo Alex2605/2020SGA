@@ -3,7 +3,7 @@ $(document).ready(function() {
 	moment.locale('pt-BR');
 	var table = $('#table-associados').DataTable({
 		searching : true,
-		lengthMenu : [ 5, 10 ],
+		lengthMenu : [ 5, 10, 15 ],
 		processing : true,
 		serverSide : true,
 		responsive : true,
@@ -16,22 +16,11 @@ $(document).ready(function() {
 				{data : 'nome'},
 				{data: 'dataInscricao', render: 
 					function(dataInscricao) {
-						return moment( dataInscricao ).format('LLL'); 
+						return moment( dataInscricao ).format('LL'); 
 					},
 					orderable : false,
 				},				
-/*
-				{	data : 'tipoAssociado',									 
-					render : function(tipoAssociado) {
-						var aux = new Array();
-						$.each(tipoAssociado, function( index, value ) {
-							  aux.push(value.desc);
-						});
-						return aux;
-					},
-					orderable : false,
-				},
-*/				
+		
 				{	orderable : false,
 					data : 'id',	
 					render : function(id) {

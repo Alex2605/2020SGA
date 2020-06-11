@@ -2,11 +2,17 @@ package com.clube.sga.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.clube.sga.datatables.Datatables;
+import com.clube.sga.datatables.DatatablesColunas;
 import com.clube.sga.domain.Agendamento;
 import com.clube.sga.domain.Servico;
 import com.clube.sga.repository.AgendamentoRepository;
@@ -18,6 +24,8 @@ public class AgendamentoService {
 	@Autowired
 	private AgendamentoRepository repository;
 
+	@Autowired
+	Datatables datatables;
 
 	@Transactional(readOnly = true)
 	public List<Servico> buscarServicosNaoAgendadosPorIdEData(String tipo, LocalDate dataIni, LocalDate dataFim) {
@@ -30,6 +38,17 @@ public class AgendamentoService {
 
 		repository.save(agendamento);
 	}
+	
+	@Transactional(readOnly = true)
+	public Map<String, Object> buscarAgendamento(Long Id, HttpServletRequest request) {
+		datatables.setRequest(request);
+		datatables.setColunas(DatatablesColunas.AGENDAMENTOS);
+		Page<?> page = repository.findByAssociadoOrAll(Id, datatables.getPageable()); 
+		return datatables.getResponse(page);
+	}
+
+	
+	
 /*
 	@Transactional(readOnly = true)
 	public Map<String, Object> buscarHistoricoPorPacienteEmail(String email, HttpServletRequest request) {

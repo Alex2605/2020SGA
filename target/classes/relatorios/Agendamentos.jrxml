@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Associados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="31eb8d5b-46e7-437f-9c32-d59f50e64203">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
-		<![CDATA[select * from Associados]]>
+	<queryString>
+		<![CDATA[SELECT
+     agendamentos.`id` AS agendamentos_id,
+     servicos.`tipo_servico` AS servicos_tipo_servico,
+     servicos.`titulo` AS servicos_titulo
+     agendamentos.`dtinicio` AS agendamentos_dtinicio,
+     agendamentos.`dtfim` AS agendamentos_dtfim,
+     associados.`nome` AS associados_nome,
+     associados.`tipo_associado` AS associados_tipo_associado
+FROM
+     `agendamentos` agendamentos,
+     `associados` associados,
+     `servicos` servicos
+]]>
 	</queryString>
-	<field name="id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="nome" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="dtinscricao" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="tipo_associado" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="agendamentos_id" class="java.lang.Long"/>
+	<field name="servicos_tipo_servico" class="java.lang.String"/>
+	<field name="agendamentos_dtinicio" class="java.sql.Date"/>
+	<field name="agendamentos_dtfim" class="java.sql.Date"/>
+	<field name="associados_nome" class="java.lang.String"/>
+	<field name="associados_tipo_associado" class="java.lang.String"/>
+	<field name="servicos_titulo" class="java.lang.String"/>
 	<background>
 		<band/>
 	</background>

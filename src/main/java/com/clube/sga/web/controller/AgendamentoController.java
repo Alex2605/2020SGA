@@ -2,6 +2,8 @@ package com.clube.sga.web.controller;
 
 import java.time.LocalDate;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -43,6 +45,13 @@ public class AgendamentoController {
 
 		return "agendamento/cadastro";		
 	}
+
+	// abre a pagina de agendamento de consultas 
+	@GetMapping({"/consultar"})
+	public String ConsultaAgendamento(Agendamento agendamento) {
+		return "agendamento/historico-associado";		
+	}
+	
 	
 	// busca os servicos livres, ou seja, sem agendamento
 	@GetMapping("/servico/{tipo}/dataIni/{dataIni}/dataFim/{dataFim}")
@@ -90,7 +99,7 @@ public class AgendamentoController {
 	}
 */	
 	// localizar agendamento pelo id e envia-lo para a pagina de cadastro
-	@GetMapping("/editar/consulta/{id}") 
+	@GetMapping("/edicao/{id}") 
 	public String preEditarConsultaAssociado(@PathVariable("id") Long id, 
 										    ModelMap model, @AuthenticationPrincipal User user) {
 		
@@ -111,13 +120,23 @@ public class AgendamentoController {
 		return "redirect:/agendamentos/agendar";
 	}
 	
-	@GetMapping("/excluir/consulta/{id}")
+	@GetMapping("/excluir/{id}")
 	public String excluirConsulta(@PathVariable("id") Long id, RedirectAttributes attr) {
 		service.remover(id);
 		attr.addFlashAttribute("sucesso", "Consulta excluída com sucesso.");
 		return "redirect:/agendamentos/historico/associado";
 	}
 
+	@GetMapping("/datatables/server")
+	public ResponseEntity<?> getDependentes(HttpServletRequest request, @AuthenticationPrincipal User user) {
+		Associado associado = associadoService.buscarPorUsuarioEmail(user.getUsername());
+		return ResponseEntity.ok(service.buscarAgendamento(associado.getId(), request));
+	}
+
+	
+	
+	
+	
 	@ModelAttribute("tipoServicos")
 	public TipoServico[] getTipoServicos() {
 		return TipoServico.values();

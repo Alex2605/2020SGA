@@ -39,7 +39,7 @@
 									class="col-sm-2 col-form-label">Serviço</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" th:field="*{titulo}"
-										id="servico" placeholder="Chalé" required />
+										id="servico" placeholder="insira o nome do serviço. Ex: churrasqueira 01, chale verão, etc." required />
 									<div class="invalid-feedback">Serviço é requerida.</div>	
 								</div>
 							</div>		
@@ -70,21 +70,22 @@
 								</div>
 							</div>
 						</form>
-						
-						<hr/>
-						
-						<h2>Lista de Serviços</h2>
-						
-						<table id="table-especializacao" class="table table-sm table-striped table-bordered nowrap" style="width:100%">
-						  <thead class="thead-dark">
-						    <tr>
-						      <th scope="col">#</th>
-						      <th scope="col">Serviço</th>
-						      <th scope="col">Editar</th>
-						      <th scope="col">Excluir</th>
-						    </tr>
-						  </thead>
-						</table>
+						<div id = "exibe-servicos">
+							<hr/>
+							
+							<h2>Lista de Serviços Cadastrados</h2>
+							
+							<table id="table-especializacao" class="table table-sm table-striped table-bordered nowrap" style="width:100%">
+							  <thead class="thead-dark">
+							    <tr>
+							      <th scope="col">#</th>
+							      <th scope="col">Serviço</th>
+							      <th scope="col">Editar</th>
+							      <th scope="col">Excluir</th>
+							    </tr>
+							  </thead>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
