@@ -43,10 +43,6 @@ INNER JOIN `servicos` servicos ON agendamentos.`id_servico` = servicos.`id`]]>
 					</textElement>
 					<text><![CDATA[Lista de Agendamentos]]></text>
 				</staticText>
-				<image hAlign="Center" vAlign="Middle">
-					<reportElement x="275" y="3" width="74" height="70" uuid="0d78498c-c676-4cf5-bbcc-bd87ca9e740f"/>
-					<imageExpression><![CDATA["C:\\Users\\alexa\\OneDrive\\WSTCC_2020\\SGA\\src\\main\\resources\\static\\image\\spring-security.png"]]></imageExpression>
-				</image>
 			</frame>
 		</band>
 	</title>

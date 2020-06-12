@@ -39,10 +39,6 @@
 					</textElement>
 					<text><![CDATA[Lista de Associados]]></text>
 				</staticText>
-				<image hAlign="Center" vAlign="Middle">
-					<reportElement x="275" y="3" width="74" height="70" uuid="fee94f3b-7f9b-4157-9c79-da813a7b7bfe"/>
-					<imageExpression><![CDATA["C:\\Users\\alexa\\OneDrive\\WSTCC_2020\\SGA\\src\\main\\resources\\static\\image\\spring-security.png"]]></imageExpression>
-				</image>
 			</frame>
 		</band>
 	</title>
