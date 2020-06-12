@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.clube.sga.domain.Associado;
 import com.clube.sga.domain.Dependente;
 import com.clube.sga.domain.TipoDependente;
+import com.clube.sga.exception.AcessoNegadoException;
 import com.clube.sga.service.AssociadoService;
 import com.clube.sga.service.DependenteService;
 
@@ -35,8 +36,15 @@ public class DependenteController {
 	private AssociadoService associadoService;
 
 	@GetMapping({"", "/"})
-	public String abrir(Dependente dependente) {
+	public String abrir(Dependente dependente, @AuthenticationPrincipal User user) {
 
+		Associado associado = associadoService.buscarPorUsuarioEmail(user.getUsername());
+		if (associado.hasNotId()) {
+			throw new AcessoNegadoException("Somente Associados cadastrados podem reservar serviços. "
+				+ "Faça o seu cadastro na opção Cadastrar dados");
+		}
+
+		
 		return "dependente/dependente";
 	}
 

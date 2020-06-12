@@ -23,6 +23,8 @@ import com.clube.sga.domain.Agendamento;
 import com.clube.sga.domain.Associado;
 import com.clube.sga.domain.Servico;
 import com.clube.sga.domain.TipoServico;
+import com.clube.sga.domain.Usuario;
+import com.clube.sga.exception.AcessoNegadoException;
 import com.clube.sga.service.AgendamentoService;
 import com.clube.sga.service.AssociadoService;
 import com.clube.sga.service.ServicoService;
@@ -41,8 +43,15 @@ public class AgendamentoController {
 
 	// abre a pagina de agendamento de consultas 
 	@GetMapping({"/agendar"})
-	public String agendarConsulta(Agendamento agendamento) {
+	public String agendarConsulta(Agendamento agendamento, @AuthenticationPrincipal User user) {
 
+		Associado associado = associadoService.buscarPorUsuarioEmail(user.getUsername());
+		if (associado.hasNotId()) {
+			throw new AcessoNegadoException("Somente Associados cadastrados podem reservar serviços. "
+					+ "Faça o seu cadastro na opção Cadastrar dados");
+
+		}
+	
 		return "agendamento/cadastro";		
 	}
 
