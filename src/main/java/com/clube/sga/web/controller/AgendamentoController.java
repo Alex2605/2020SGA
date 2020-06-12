@@ -128,14 +128,11 @@ public class AgendamentoController {
 	}
 
 	@GetMapping("/datatables/server")
-	public ResponseEntity<?> getDependentes(HttpServletRequest request, @AuthenticationPrincipal User user) {
+	public ResponseEntity<?> getAssociados(HttpServletRequest request, @AuthenticationPrincipal User user) {
 		Associado associado = associadoService.buscarPorUsuarioEmail(user.getUsername());
 		return ResponseEntity.ok(service.buscarAgendamento(associado.getId(), request));
 	}
 
-	
-	
-	
 	
 	@ModelAttribute("tipoServicos")
 	public TipoServico[] getTipoServicos() {
