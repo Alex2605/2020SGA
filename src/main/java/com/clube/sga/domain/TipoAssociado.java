@@ -3,10 +3,7 @@ package com.clube.sga.domain;
 public enum TipoAssociado {
 	
 	BENEMERITO(10, "Benemérito"),
-	EFETIVO(20, "Efetivo"),
-	PENSIONISTA(30,"Efetivo Pensionista"),
-	FAMILIAR(40,"Familiar"),
-	CONVIDADO(50,"Convidado");
+	EFETIVO(20, "Efetivo");
 	
 	private int cod;
 	private String descricao;
