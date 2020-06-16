@@ -23,7 +23,6 @@ import com.clube.sga.domain.Agendamento;
 import com.clube.sga.domain.Associado;
 import com.clube.sga.domain.Servico;
 import com.clube.sga.domain.TipoServico;
-import com.clube.sga.domain.Usuario;
 import com.clube.sga.exception.AcessoNegadoException;
 import com.clube.sga.service.AgendamentoService;
 import com.clube.sga.service.AssociadoService;
@@ -51,7 +50,6 @@ public class AgendamentoController {
 					+ "Faça o seu cadastro na opção Cadastrar dados");
 
 		}
-	
 		return "agendamento/cadastro";		
 	}
 

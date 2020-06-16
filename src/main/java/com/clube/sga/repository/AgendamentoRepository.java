@@ -20,7 +20,11 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long>{
 				+ "select a.servico.id "
 					+ "from Agendamento a "
 					+ "where LOWER(a.servico.tipoServico) = LOWER(:tipo) "
-					+ "  and ( a.dataInicio  BETWEEN :dataIni AND :dataFim or a.dataFim  BETWEEN :dataIni AND :dataFim )"
+					+ "  and (( a.dataInicio  BETWEEN :dataIni AND :dataFim "
+					       + " or a.dataFim  BETWEEN :dataIni AND :dataFim ) or"
+					       + "(a.dataInicio  < :dataIni and a.dataFim  > :dataFim)"
+					       + ")"
+					
 			+ ") "
 			+ "order by s.id asc")
 	List<Servico> findByServicoIdAndDataNotHorarioAgendado(String tipo, LocalDate dataIni, LocalDate dataFim);

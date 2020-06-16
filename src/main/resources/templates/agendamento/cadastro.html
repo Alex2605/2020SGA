@@ -54,7 +54,7 @@
 									<small class="form-text text-muted">Selecione 
 										a data da reserva</small>
 									<input class="form-control" type="date" id="dtFim" 
-										th:field="*{dataFim}"  />
+										th:field="*{dataFim}" onblur="validaDataFim()" />
 									<div class="invalid-feedback">
 								      Data final de reserva é obrigatória.
 								    </div>	
@@ -93,10 +93,7 @@
 	</section>
 	<script	th:src="@{/js/agendamento.js(v=${version})}" th:fragment="js"></script>
 	<script th:inline="javascript" th:fragment="inlinescript">
-	$('#dtFim').on('blur', function () {
-		carregaServico();
-	});
-	
+
 	function updateServico() {
 		$('#dtInicio').val("");
 		$('#dtInicio').val("");	
@@ -113,13 +110,26 @@
 	
 
 	function validaDataInicio(){
-		if (tipoServico.value != "CHALE"){
-			carregaServico();
+		if(moment().isAfter($('#dtInicio').val())){
+			if (tipoServico.value != "CHALE"){
+				carregaServico();
+			}
+		else{
+			alert("A data de início de reserva deverá ser superior a data inicial. Favor reinserir a data de início de reserva");
+			$('#dtInicio').val("");
+			}
 		}
+		
+
 	};
 	
 	function validaDataFim(){
-		carregaServico();
+		if ($('#dtFim').val() <= $('#dtInicio').val()){
+			alert("A data de fim de reserva deverá ser ser superior a data de início. Favor reinserir a data de fim de reserva");
+			$('#dtFim').val("");
+		}else{
+			carregaServico();
+		}
 	};
 	
 	function carregaServico() {
